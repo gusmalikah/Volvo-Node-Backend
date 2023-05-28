@@ -12,13 +12,13 @@ export class CustomerController {
     return this.customerService.findAll(params)
   }
 
-  @Post("register")
-  async register(@Body() customerData: Pick<Customer, "email"|"password">): Promise<Omit<Customer, "password">> {
-    return this.customerService.register(customerData);
+  @Post("signup")
+  async signup(@Body() customerData: Pick<Customer, "email"|"password">): Promise<Omit<Customer, "password"> | {error:string}> {
+    return this.customerService.signup(customerData);
   }
 
   @Post("login")
-  async login(@Body() customerData: Pick<Customer, "email"|"password">): Promise<{accessToken:string}> {
+  async login(@Body() customerData: Pick<Customer, "email"|"password">): Promise<{accessToken:string} | {error: string}> {
     return this.customerService.login(customerData);
   }
 }
