@@ -4,7 +4,6 @@ import { GetCustomerInput } from './dto/customer.input';
 import { Customer } from '@prisma/client';
 import * as bcrypt from "bcrypt"
 import * as jwt from "jsonwebtoken"
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 const saltRounds = 10
 @Injectable()

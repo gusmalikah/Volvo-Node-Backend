@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { Customer } from '@prisma/client';
 import { GetCustomerInput } from './dto/customer.input';
@@ -8,7 +8,7 @@ export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Get()
-  async getAll(params: GetCustomerInput){
+  async getAll(@Query() params: GetCustomerInput){
     return this.customerService.findAll(params)
   }
 
