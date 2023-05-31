@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule, Req, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { PrismaService } from 'src/prisma.service';
 import { CustomerResolver } from './customer.resolver';

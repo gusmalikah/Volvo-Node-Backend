@@ -1,11 +1,14 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { Customer } from '@prisma/client';
 import { GetCustomerInput } from './dto/customer.input';
+import { Request, Response } from 'express';
+
 
 @Controller("customer")
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
+
 
   @Get()
   async getAll(@Query() params: GetCustomerInput){
@@ -18,7 +21,18 @@ export class CustomerController {
   }
 
   @Post("login")
-  async login(@Body() customerData: Pick<Customer, "email"|"password">): Promise<{accessToken:string} | {error: string}> {
-    return this.customerService.login(customerData);
+  async login(@Body() customerData: Pick<Customer, "email"|"password">, @Res({passthrough: true}) res:Response): Promise<{accessToken:string} | {error: string}> {
+    return this.customerService.login(customerData, res);
   }
+
+  @Post("refresh")
+  async refresh(@Req() request: Request, @Res() response: Response) {
+    return this.customerService.refresh(request, response)
+    }
+
+  @Post("verify")
+  async verify(@Body() body:{email: string, code: string}, @Res({passthrough: true}) res:Response){
+    return this.customerService.verify(body, res)
+  }
+
 }

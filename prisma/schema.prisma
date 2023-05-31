@@ -12,9 +12,18 @@ datasource db {
 }
 
 model Customer {
-  id        String   @id @unique @default(uuid())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String             @id @unique @default(uuid())
+  email            String             @unique
+  password         String
+  verfied          Boolean            @default(false)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  VerificationCode VerificationCode?
+}
+
+model VerificationCode {
+  id       String   @id @unique @default(uuid())
+  code     String
+  customer Customer @relation(fields: [email], references: [email])
+  email    String   @unique
 }
